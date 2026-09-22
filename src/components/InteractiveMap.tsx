@@ -136,7 +136,7 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableCluster
             scrollWheelZoom={true}
             style={{ height: "100%", width: "100%", background: '#0f172a' }}
             zoomControl={false}
-            attributionControl={false}
+            attributionControl={true}
             minZoom={3}
             maxZoom={12}
         >
@@ -144,10 +144,10 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableCluster
             {!hideControls && <CustomZoomControl />}
 
             <TileLayer
-                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                subdomains="abcd"
-                maxZoom={20}
+                url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                className="osm-dark-tiles"
+                maxZoom={19}
             />
 
             {enableClustering ? (
@@ -217,6 +217,9 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableCluster
             )}
 
             <style>{`
+                .osm-dark-tiles {
+                    filter: invert(1) hue-rotate(180deg) brightness(0.7) contrast(1.1);
+                }
                 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
                     background: transparent;
                     box-shadow: none;
