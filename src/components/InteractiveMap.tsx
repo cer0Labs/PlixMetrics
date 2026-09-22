@@ -1,8 +1,8 @@
-import React, { useMemo, useRef, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import React, {useEffect, useMemo, useRef} from 'react';
+import {MapContainer, Marker, Popup, TileLayer, useMap} from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
-import { ActiveSession } from '../types';
+import {ActiveSession} from '../types';
 
 interface InteractiveMapProps {
     sessions: ActiveSession[];
@@ -12,7 +12,7 @@ interface InteractiveMapProps {
 }
 
 // Component to handle auto-zooming to fit markers
-const AutoZoom = ({ sessions }: { sessions: ActiveSession[] }) => {
+const AutoZoom = ({sessions}: { sessions: ActiveSession[] }) => {
     const map = useMap();
     const hasZoomed = useRef(false);
 
@@ -22,9 +22,9 @@ const AutoZoom = ({ sessions }: { sessions: ActiveSession[] }) => {
             const bounds = L.latLngBounds(points);
 
             if (sessions.length === 1) {
-                map.setView(points[0], 6, { animate: true });
+                map.setView(points[0], 6, {animate: true});
             } else {
-                map.fitBounds(bounds, { padding: [50, 50], maxZoom: 10, animate: true });
+                map.fitBounds(bounds, {padding: [50, 50], maxZoom: 10, animate: true});
             }
             hasZoomed.current = true;
         }
@@ -45,8 +45,9 @@ const CustomZoomControl = () => {
                 title="Zoom In"
                 aria-label="Zoom In"
             >
-                <svg className="w-5 h-5 transform group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4" />
+                <svg className="w-5 h-5 transform group-hover:scale-110 transition-transform" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 4v16m8-8H4"/>
                 </svg>
             </button>
             <button
@@ -55,8 +56,9 @@ const CustomZoomControl = () => {
                 title="Zoom Out"
                 aria-label="Zoom Out"
             >
-                <svg className="w-5 h-5 transform group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M20 12H4" />
+                <svg className="w-5 h-5 transform group-hover:scale-110 transition-transform" fill="none"
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M20 12H4"/>
                 </svg>
             </button>
         </div>
@@ -109,7 +111,12 @@ const createClusterCustomIcon = (cluster: any) => {
     });
 };
 
-const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableClustering = true, onUserClick, hideControls = false }) => {
+const InteractiveMap: React.FC<InteractiveMapProps> = ({
+                                                           sessions,
+                                                           enableClustering = true,
+                                                           onUserClick,
+                                                           hideControls = false
+                                                       }) => {
     const validSessions = useMemo(() => {
         return sessions.filter(s =>
             s.latitude !== undefined &&
@@ -134,14 +141,14 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableCluster
             center={center}
             zoom={3}
             scrollWheelZoom={true}
-            style={{ height: "100%", width: "100%", background: '#0f172a' }}
+            style={{height: "100%", width: "100%", background: '#0f172a'}}
             zoomControl={false}
             attributionControl={true}
             minZoom={3}
             maxZoom={12}
         >
-            <AutoZoom sessions={validSessions} />
-            {!hideControls && <CustomZoomControl />}
+            <AutoZoom sessions={validSessions}/>
+            {!hideControls && <CustomZoomControl/>}
 
             <TileLayer
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -168,7 +175,8 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableCluster
                                 closeButton={false}
                                 className="custom-popup"
                             >
-                                <div className="bg-slate-800 text-slate-200 p-2 rounded-lg border border-slate-700 shadow-xl w-max max-w-[200px]">
+                                <div
+                                    className="bg-slate-800 text-slate-200 p-2 rounded-lg border border-slate-700 shadow-xl w-max max-w-[200px]">
                                     <div
                                         className={`font-bold text-cyan-400 text-sm mb-1 truncate ${onUserClick ? 'cursor-pointer hover:text-cyan-300 hover:underline' : ''}`}
                                         onClick={(e) => {
@@ -178,7 +186,8 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableCluster
                                     >
                                         {session.user}
                                     </div>
-                                    <div className="text-[10px] uppercase tracking-wider text-slate-500 font-medium truncate">
+                                    <div
+                                        className="text-[10px] uppercase tracking-wider text-slate-500 font-medium truncate">
                                         {session.server_name || 'Unknown Server'}
                                     </div>
                                 </div>
@@ -197,7 +206,8 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableCluster
                             closeButton={false}
                             className="custom-popup"
                         >
-                            <div className="bg-slate-800 text-slate-200 p-2 rounded-lg border border-slate-700 shadow-xl w-max max-w-[200px]">
+                            <div
+                                className="bg-slate-800 text-slate-200 p-2 rounded-lg border border-slate-700 shadow-xl w-max max-w-[200px]">
                                 <div
                                     className={`font-bold text-cyan-400 text-sm mb-1 truncate ${onUserClick ? 'cursor-pointer hover:text-cyan-300 hover:underline' : ''}`}
                                     onClick={(e) => {
@@ -207,7 +217,8 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({ sessions, enableCluster
                                 >
                                     {session.user}
                                 </div>
-                                <div className="text-[10px] uppercase tracking-wider text-slate-500 font-medium truncate">
+                                <div
+                                    className="text-[10px] uppercase tracking-wider text-slate-500 font-medium truncate">
                                     {session.server_name || 'Unknown Server'}
                                 </div>
                             </div>
