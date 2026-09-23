@@ -152,6 +152,8 @@ const InteractiveMap: React.FC<InteractiveMapProps> = ({
 
             <TileLayer
                 url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+                // OSM requires a Referer; send only the origin even if the page policy suppresses it.
+                referrerPolicy="strict-origin-when-cross-origin"
                 attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 className="osm-dark-tiles"
                 maxZoom={19}
